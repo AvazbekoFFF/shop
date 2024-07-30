@@ -11,9 +11,14 @@ class Characteristic extends Model
     use HasFactory;
 
     protected $fillable = [
-        'product_id',
+        'good_id',
         'name',
         'value',
+    ];
+    protected $hidden = [
+        'good_id',
+        'created_at',
+        'updated_at',
     ];
 
     public function good(): BelongsTo

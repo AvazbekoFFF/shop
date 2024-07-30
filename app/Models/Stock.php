@@ -11,9 +11,14 @@ class Stock extends Model
     use HasFactory;
 
     protected $fillable = [
-        'product_id',
+        'good_id',
         'count',
         'address',
+    ];
+    protected $hidden = [
+        'good_id',
+        'created_at',
+        'updated_at',
     ];
 
     public function good(): BelongsTo

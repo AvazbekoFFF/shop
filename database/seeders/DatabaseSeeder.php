@@ -16,9 +16,28 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->makeOwnGood();
+
         Category::factory()->count(5)->create();
-        Good::factory()->count(10)->create();
-        Stock::factory()->count(5)->create();
-        Characteristic::factory()->count(5)->create();
+        $goods = Good::factory()->count(20)->create();
+        foreach ($goods as $good) {
+            Stock::factory()->count(3)->create(['good_id' => $good->id]);
+            Characteristic::factory()->count(3)->create(['good_id' => $good->id]);
+        }
+    }
+    private function makeOwnGood(): void
+    {
+        $category = Category::factory()->create(['id' => 1091]);
+        $good = Good::factory()->create(['category_id' => $category->id, 'prices' => [
+                'old' => 100,
+                'price' => 250
+            ]]
+        );
+        Stock::factory()->create(['id' => 2, 'good_id' => $good->id]);
+        Characteristic::factory()->create([
+            'good_id' => $good->id,
+            'name' => 'Производитель',
+            'value' => 'Китай'
+        ]);
     }
 }
